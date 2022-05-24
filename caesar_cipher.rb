@@ -17,13 +17,19 @@ ascii_array = []
 input_string.each_codepoint { |char| ascii_array.push(char)}
 
 
-# add (.map?) the cipher key to each ASCII code (TODO: while making sure to wrap if you go out of bounds)
+# add (.map?) the cipher key to each ASCII code (TODO: while making sure to wrap if you go out of bounds FIXME: still prints symbols rather than wrapping)
 shifted_ascii = ascii_array.map do |value|
     # only shift alphabetical characters
     if (value > 64 && value < 91) || (value > 96 && value < 123)
-        value + shift_key
+        shifted_value = value + shift_key
         # wrap around if you would change to a non-alphabetical character
-
+        if shifted_value > 90 && shifted_value < 97
+            shifted_value = 64 + (shifted_value - 90)
+        elsif shifted_value > 96
+            shifted_value += 96 + (shifted_value - 122)
+        else
+            shifted_value
+        end
     else
         value
     end
