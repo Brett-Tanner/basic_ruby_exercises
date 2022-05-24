@@ -17,8 +17,17 @@ ascii_array = []
 input_string.each_codepoint { |char| ascii_array.push(char)}
 
 
-# add (.map?) the cipher key to each ASCII code (TODO: while making sure to wrap if you go out of bounds, also preserve case)
-shifted_ascii = ascii_array.map { |value| value + shift_key}
+# add (.map?) the cipher key to each ASCII code (TODO: while making sure to wrap if you go out of bounds)
+shifted_ascii = ascii_array.map do |value|
+    # only shift alphabetical characters
+    if (value > 64 && value < 91) || (value > 96 && value < 123)
+        value + shift_key
+        # wrap around if you would change to a non-alphabetical character
+
+    else
+        value
+    end
+end
 
 # convert back to chars
 shifted_chars = shifted_ascii.map { |value| value.chr}
