@@ -16,17 +16,17 @@ shift_key = gets.chomp.to_i
 ascii_array = []
 input_string.each_codepoint { |char| ascii_array.push(char)}
 
-
-# add (.map?) the cipher key to each ASCII code (TODO: while making sure to wrap if you go out of bounds FIXME: still prints symbols rather than wrapping)
+# add the cipher key to each ASCII code
 shifted_ascii = ascii_array.map do |value|
     # only shift alphabetical characters
     if (value > 64 && value < 91) || (value > 96 && value < 123)
         shifted_value = value + shift_key
-        # wrap around if you would change to a non-alphabetical character
+        # wrap for capitals
         if shifted_value > 90 && shifted_value < 97
-            shifted_value = 64 + (shifted_value - 90)
-        elsif shifted_value > 96
-            shifted_value += 96 + (shifted_value - 122)
+            shifted_value - 90 + 64
+        # wrap for lowercase
+        elsif shifted_value > 122
+            shifted_value - 122 + 96
         else
             shifted_value
         end
@@ -42,4 +42,4 @@ shifted_chars = shifted_ascii.map { |value| value.chr}
 shifted_string = shifted_chars.join
 
 # put the resulting string
-puts "Your ciphered message is #{shifted_string}"
+puts "Your ciphered message is: #{shifted_string}"
