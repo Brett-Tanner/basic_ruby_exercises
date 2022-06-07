@@ -11,23 +11,30 @@ end
 # convert the input values from strings to floats
 input_array.map! {|value| value.to_f}
 
-# compare two values and swap them if right is smaller
-# track number of swaps made
-num_of_swaps = 0
-sorted_array = input_array.each_with_index do |value, index|
-    next_value = input_array[index + 1]
-    if value > next_value
-        temp = next_value
-        next_value = value
-        value = temp
-        num_of_swaps++ 
+# define recursive method for swapping and tracking number of swaps made 
+def sort_array array
+    num_of_swaps = 0
+    array_length = array.length
+    array.each_with_index do |value, index|
+        if index >= array_length - 1
+            break
+        end
+        next_index = index + 1
+        next_value = array[next_index]
+        if value > next_value
+            temp = next_value
+            array[next_index] = value
+            array[index] = temp
+            num_of_swaps += 1 
+        end
     end
-    
+    if num_of_swaps > 0
+        num_of_swaps = 0
+        sort_array(array)
+    end
+    array
 end
 
-
-# check if the array is sorted??
-
-
-
-# if not sorted run again
+# call method on the array
+sorted_array = sort_array(input_array)
+p sorted_array
