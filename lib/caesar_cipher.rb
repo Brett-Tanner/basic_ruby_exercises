@@ -22,15 +22,10 @@ class Cypher
         gets.chomp.to_i
     end
 
-    def to_ascii
-        
+    def to_ascii(message)
+        message.codepoints
     end
 end
-
-
-# # convert the string to an array of ASCII values
-# ascii_array = []
-# input_string.each_codepoint { |char| ascii_array.push(char)}
 
 # # add the cipher key to each ASCII code
 # shifted_ascii = ascii_array.map do |value|
