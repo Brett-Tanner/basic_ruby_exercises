@@ -21,6 +21,10 @@ class Cypher
         puts "What would you like to shift by?"
         gets.chomp.to_i
     end
+
+    def to_ascii
+        
+    end
 end
 
 
