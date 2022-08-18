@@ -93,18 +93,31 @@ RSpec.describe Cypher do
 
     context "result" do
         
-        it "wraps around when end of alphabet is reached" do
-            allow_any_instance_of(Cypher).to receive(:gets).and_return(def_string, "10")
+        describe "#cypher" do
+            it "returns a string" do
+                allow_any_instance_of(Cypher).to receive(:gets).and_return(def_string, "10")
+                expect(subject.cypher).to be_an_instance_of String
+            end
             
-        end
-        
-        it "maintains case" do
-            allow_any_instance_of(Cypher).to receive(:gets).and_return(def_string, "10")
+            it "returns ciphered message of same length as input message" do
+                allow_any_instance_of(Cypher).to receive(:gets).and_return(def_string, "10")
+                expect(subject.cypher.length).to eq(subject.input_message.length)
+            end
             
-        end
+            it "wraps around when end of alphabet is reached" do
+                allow_any_instance_of(Cypher).to receive(:gets).and_return("z", "10")
+                expect(subject.cypher).to eq("j")
+            end
+            
+            it "maintains case" do
+                allow_any_instance_of(Cypher).to receive(:gets).and_return("Z", "10")
+                expect(subject.cypher).to eq("J")
+            end
 
-        it "returns ciphered message of same length as input message" do
-            
+            it "doesn't alter non-alphabetical characters" do
+                allow_any_instance_of(Cypher).to receive(:gets).and_return("!%", "10")
+                expect(subject.cypher).to eq("!%")
+            end
         end
     end
 end

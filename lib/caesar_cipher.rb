@@ -5,6 +5,7 @@ class Cypher
     def initialize
         @input_message = get_message()
         @key = get_key()
+        cypher()
     end
 
     def get_message
@@ -22,6 +23,12 @@ class Cypher
         gets.chomp.to_i
     end
 
+    def cypher
+        ascii_message = to_ascii(@input_message)
+        shifted_message = apply_key(ascii_message)
+        to_string(shifted_message)
+    end
+
     def to_ascii(message)
         message.codepoints
     end
@@ -31,7 +38,7 @@ class Cypher
             if (value > 64 && value < 91) || (value > 96 && value < 123)
                 shifted_value = value + @key
                 # wrap for capitals
-                if shifted_value > 90 && shifted_value < 97
+                if shifted_value > 90 && shifted_value < 122
                     shifted_value - 90 + 64
                 # wrap for lowercase
                 elsif shifted_value > 122
@@ -46,10 +53,8 @@ class Cypher
     end
 
     def to_string(shifted_array)
-        shifted_array.map {|value| value.chr}.join
+        result = shifted_array.map {|value| value.chr}.join
+        puts result
+        result
     end
 end
-
-
-# # put the resulting string
-# puts "Your ciphered message is: #{shifted_string}"
